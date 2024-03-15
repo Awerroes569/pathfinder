@@ -1,0 +1,33 @@
+@import'partials/variables.scss';
+@import'partials/normalize.scss';
+@import'partials/bootstrap.scss';
+@import'partials/layout.scss';
+@import'partials/typography.scss';
+@import'partials/global.scss';
+
+.main-container {
+    max-width: 700px;
+    height:100vh;
+    background: url('../images/background.jpg') no-repeat center center/cover;
+
+    .header {
+
+        .top-header {
+        
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+
+            .main-nav {
+
+                .nav-item {
+                    margin: 0 20px;
+                    color: $color-light;
+                    text-decoration: none;
+                }
+                
+            }
+        }
+    }
+}
