@@ -1,0 +1,30 @@
+#about {
+
+    figure {
+
+        .first-image {
+            position: relative;
+            margin-top: 5vh;
+            width: 40%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        figcaption {
+            position: absolute;
+            color: $color-light;
+            font-weight: bold;
+
+            .caption-container {
+
+                .caption-big-title {
+                    font-size: 1.1rem;
+
+                    .caption-small-title {
+                        font-size: 0.7rem;
+                    }
+                }
+            }
+        }
+    }
+}
