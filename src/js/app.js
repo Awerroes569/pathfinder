@@ -1,5 +1,5 @@
 //import { settings, select, classNames } from './settings.js';
-//import Product from './components/Product.js';
+import Table from './components/Table.js';
 //import Cart from './components/Cart.js';
 //import Booking from './components/Booking.js';
 //import Home from './components/Home.js';
@@ -34,6 +34,11 @@ const app = {
   initHome: function () {
     console.log('activatePage:');
   },
+  
+  initTable: function () {
+    const table = new Table();
+    console.log('table:', table);
+  },
 
   init: function () {
     const thisApp = this;
@@ -42,7 +47,7 @@ const app = {
     console.log('*** App initPages ***');
     thisApp.initData();
     console.log('*** App initData ***'); 
-    thisApp.initCart();
+    thisApp.initTable();
     console.log('*** App initCart ***');
     thisApp.initBooking();
     console.log('*** App initBooking ***');
@@ -53,4 +58,4 @@ const app = {
 
 app.init();
 
-export default app;
+//export default app;

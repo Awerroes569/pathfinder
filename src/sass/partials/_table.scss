@@ -1,0 +1,23 @@
+.grid-container {
+    height: 500px;
+    width: 500px;
+    max-width: 1000px;
+    margin: auto;
+    background: grey;
+}
+
+.table {
+
+    background: white;
+    display: grid;
+    grid-template-columns: repeat(10, 20px);
+    grid-template-rows: repeat(10, 20px);
+    gap: 5px;
+    border: 1px solid black;
+    /* Optional: adds border around the grid */
+}
+
+.grid-item {
+    background: grey;
+    font-size: 10px;
+}

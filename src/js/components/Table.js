@@ -2,9 +2,9 @@
 
 class Table {
 
-  constructor(domElement) {
+  constructor() {
 
-    this.table = domElement;
+    this.table = document.querySelector('.table');
     this.phase = 'draw';
     this.neighbours = [
       [-1, 0],   //TOP
@@ -44,7 +44,7 @@ class Table {
 
   isValid(coordinates) {
 
-    console.log('conda', !this.neighbours)
+    console.log('conda', !this.neighbours);
 
     if (!this.neighbours) {
       return true;
@@ -90,7 +90,9 @@ class Table {
     this.fillGrid(this.table);
     console.log('GRID DONE');
     console.log('THITHISTHIS', this.table);
+      
     this.table.addEventListener('click', function (event) {
+      event.preventDefault();
       let gridItemId = event.target.id;
       let rowcol = gridItemId.split(' ');
       let toCheck = [parseInt(rowcol[0]), parseInt(rowcol[1])];
@@ -104,3 +106,5 @@ class Table {
   }
 
 }
+
+export default Table;
