@@ -20,14 +20,13 @@ body {
 }
 
 .container {
-  max-width: 700px;
+  max-width: $max-width;
   margin: 0 auto;
-  //padding: 0 20px;
-  //background: grey;
 }
 
 .main-container {
-  max-width: 700px;
+  position: relative;
+  max-width: $max-width;
   height: 100vh;
   background: url('../images/background.jpg') no-repeat center center/cover;
 }

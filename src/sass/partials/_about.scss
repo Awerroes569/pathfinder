@@ -1,27 +1,66 @@
 #about {
+    display: flex;
+    flex-direction: column;
+    //max-height: 30vh;
 
-    figure {
+    .figure-one {
+        position: relative;
+        justify-self: flex-start;
 
         .first-image {
-            position: relative;
             margin-top: 5vh;
             width: 40%;
             height: auto;
             object-fit: cover;
         }
-        
-        figcaption {
-            position: absolute;
+
+        .first-image-caption {
             color: $color-light;
-            font-weight: bold;
 
             .caption-container {
+                position: absolute;
+                top: 62%;
+                right: 33%;
 
                 .caption-big-title {
-                    font-size: 1.1rem;
-
+                    font-size: calc(10px + min($max-width, 1vw));
+                    font-weight: $font-bold;
+    
                     .caption-small-title {
-                        font-size: 0.7rem;
+                        font-size: calc(5px + min($max-width, 0.8vw));
+                    }
+                }
+            }
+        }      
+    }
+
+    .figure-two {
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+
+        .second-image {
+
+            width: 55%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .second-image-caption {
+            color: $color-light;
+
+            .caption-container {
+                position: absolute;
+                top: 16%;
+                left: 15%;
+                margin-top: 20px;
+
+                .caption-big-title {
+                    font-size: calc(10px + min($max-width, 1vw));
+                    font-weight: $font-bold;
+            
+                    .caption-small-title {
+                        font-size: calc(5px + min($max-width, 0.8vw));
                     }
                 }
             }
