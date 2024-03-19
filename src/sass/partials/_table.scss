@@ -1,13 +1,14 @@
 .grid-container {
-    height: 500px;
-    width: 500px;
-    max-width: 1000px;
+    height: fit-content;
+    width: fit-content;
     margin: auto;
+    align-content: center;
     background: grey;
 }
 
 .table {
-
+    margin-top: 100px;
+    
     background: white;
     display: grid;
     grid-template-columns: repeat(10, 20px);

@@ -1,4 +1,5 @@
 //const grid = document.querySelector('.table');
+import { classNames } from '../settings.js';
 
 class Table {
 
@@ -38,22 +39,43 @@ class Table {
   oneDraw(coordinates) {
     if (this.isValid(coordinates)) {
       this.draw.push([...coordinates]);
+      console.log('after push', this.draw);
       return 'red';
+    }
+    console.log('invalid');
+    return 'grey';
+  }
+
+  removeFriend(friend) {
+    var indexToRemove = this.draw.findIndex(function (array) {
+      return JSON.stringify(array) === JSON.stringify(friend);
+    });
+
+    // If the index is found (not -1), remove the array
+    if (indexToRemove !== -1) {
+      this.draw.splice(indexToRemove, 1);
+      console.log('removed', this.draw);
     }
   }
 
-  isValid(coordinates) {
+  isValid(coordinates) { 
 
-    console.log('conda', !this.neighbours);
+    console.log('conda', !this.draw.length);
 
-    if (!this.neighbours) {
+    if (!this.draw.length) {
+      console.log('no neighbours');
       return true;
     }
+    else {
+      console.log('neighbours', this.draw);
+    }
 
-    let friends = JSON.stringify(this.neighbours);
+    let friends = JSON.stringify(this.draw);
     let friend = JSON.stringify(coordinates);
 
     if (friends.includes(friend)) {
+      console.log('friends inside');
+      this.removeFriend(coordinates);
       return false;
     }
 
@@ -93,13 +115,19 @@ class Table {
       
     this.table.addEventListener('click', function (event) {
       event.preventDefault();
+      if (event.target.className !== classNames.table.gridItem) {
+        return;
+      }
       let gridItemId = event.target.id;
       let rowcol = gridItemId.split(' ');
       let toCheck = [parseInt(rowcol[0]), parseInt(rowcol[1])];
-      alert(`You produced tocheck ${toCheck}`);
+      //alert(`You produced tocheck ${toCheck}`);
       let checked = thisTable.oneDraw(toCheck);
       console.log('checked', checked);
-      event.target.style.backgroundColor = 'blue';
+      if (checked) {
+        event.target.style.backgroundColor = checked;
+      }
+      //event.target.style.backgroundColor = 'blue';
     });
 
     console.log('LISTENER ADDED');

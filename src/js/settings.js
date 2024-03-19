@@ -26,8 +26,8 @@ export const select = {
 export const settings = {};
 
 export const classNames = {
-  menuProduct: {
-    wrapperActive: 'active',
+  table: {
+    gridItem: 'grid-item',
     imageVisible: 'active',
   },
 
