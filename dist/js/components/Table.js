@@ -1,12 +1,19 @@
 //const grid = document.querySelector('.table');
-import { classNames } from '../settings.js';
+import { classNames, select } from '../settings.js';
 
 class Table {
 
   constructor() {
 
-    this.table = document.querySelector('.table');
-    this.phase = 'draw';
+    this.dom = {};
+    //this.table = document.querySelector('.table');
+    this.phase = [
+      ['DRAW ROUTES', 'FINISH DRAWING'],
+      ['PICK START','ACCEPT START'],
+      ['PICK FINISH', 'ACCEPT FINISH'],
+      ['CALCULATE ROUTE', 'COMPUTE'],
+      ['THE BEST ROUTE IS...', 'START AGAIN']
+    ];
     this.neighbours = [
       [-1, 0],   //TOP
       [0, 1],    //RIGHT
@@ -17,18 +24,49 @@ class Table {
     this.start = [];
     this.end = [];
     this.draw = [];
+    this.getElements();
     this.initGrid();
+    this.initButton();
+    this.updateDOM();
+  }
+
+  getElements() {
+    this.dom.finderContainer = document.querySelector(select.containerOf.finder);
+    this.dom.message= document.querySelector(select.finder.message);
+    this.dom.table = document.querySelector(select.finder.table);
+    this.dom.button = document.querySelector(select.finder.button);
+    console.log('button',this.dom.button);
+  }
+
+  changingPhase(thisTable = this) {
+    console.log('changing phase');
+    let moved = thisTable.phase.shift();
+    thisTable.phase.push(moved);
+    thisTable.updateDOM();
+
+  }
+
+  updateDOM() {
+    let [message, button] = this.phase[0];
+    this.dom.message.innerHTML = message;
+    this.dom.button.innerHTML = button;
   }
 
   proceedClick(coordinates) {
-    switch (this.phase) {
-    case 'draw':
+    switch (this.phase[0][0]) {
+    case 'DRAW ROUTES':
       console.log('draw');
       return this.oneDraw(coordinates);
-    case 'start':
+    case 'PICK START':
       console.log('start');
       break;
-    case 'finish':
+    case 'PICK FINISH':
+      console.log('start');
+      break;
+    case 'CALCULATE ROUTE':
+      console.log('start');
+      break;
+    case 'THE BEST ROUTE IS...':
       console.log('start');
       break;
     default:
@@ -109,11 +147,10 @@ class Table {
 
   initGrid() {
     const thisTable = this;
-    this.fillGrid(this.table);
-    console.log('GRID DONE');
-    console.log('THITHISTHIS', this.table);
+    this.fillGrid(this.dom.table);
+
       
-    this.table.addEventListener('click', function (event) {
+    this.dom.table.addEventListener('click', function (event) {
       event.preventDefault();
       if (event.target.className !== classNames.table.gridItem) {
         return;
@@ -128,9 +165,20 @@ class Table {
         event.target.style.backgroundColor = checked;
       }
       //event.target.style.backgroundColor = 'blue';
+      thisTable.changingPhase(thisTable);
     });
 
     console.log('LISTENER ADDED');
+  }
+
+  initButton() {
+    const thisTable = this;
+    this.dom.button.addEventListener('click', function (event) {
+      event.preventDefault();
+      thisTable.changingPhase(thisTable);
+      console.log('button clicked');
+      
+    });
   }
 
 }

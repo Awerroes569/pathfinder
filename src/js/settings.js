@@ -1,21 +1,16 @@
 export const select = {
 
   containerOf: {
-    menu: '#product-list',
-    cart: '#cart',
-    cartList: '.cart__order-summary',
-    pages: '#pages',
-    booking: '.booking-wrapper',
-    home: '#home',
-  },
+    finder: '.table-container' },
   all: {
     menuProducts: '#product-list > .product',
     menuProductsActive: '#product-list > .product.active',
     formInputs: 'input, select',
   },
-  home: {
-    order: '.order-box',
-    book: '.book-box',
+  finder: {
+    table: '.table',
+    message: '.current-message',
+    button: '.phase-button',
   },
 
   nav: {
