@@ -1,36 +1,41 @@
 .table-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    align-content: center;
-    background: grey;
-    margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  align-content: center;
+  background: grey;
+  margin-top: 50px;
+  border: 5x solid white;
 
-    .table {
-        margin-top: 50 px;
+  .table {
+    margin-top: 50 px;
 
-        background: white;
-        display: grid;
-        grid-template-columns: repeat(10, 20px);
-        grid-template-rows: repeat(10, 20px);
-        gap: 5px;
-        border: 1px solid black;
-        /* Optional: adds border around the grid */
+    background: white;
+    display: grid;
+    grid-template-columns: repeat(10, 20px);
+    grid-template-rows: repeat(10, 20px);
+    gap: 5px;
+    border: 5px solid white;
+    /* Optional: adds border around the grid */
 
-        .grid-item {
-                background: grey;
-                font-size: 10px;
-        }
+    .grid-item {
+      background: grey;
+      font-size: 10px;
     }
+  }
 
-    .phase-button {
-        margin: 30px auto;
-        height: 30px;
-        width: 70px;
-        background-color: yellow;
-    }
+  .phase-button {
+    margin: 20px auto;
+    //height: 30px;
+    width: fit-content;
+    background-color: yellow;
+    padding: 3px 10px;
+    text-align: center;
+    text-justify: center;
+    border-radius: 5px;
+  }
 }
 
 

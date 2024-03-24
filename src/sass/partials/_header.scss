@@ -1,42 +1,40 @@
 .header {
+  .top-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
 
-    .top-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px 0;
-
-        .main-nav {
-
-            .nav-item {
-                margin: 0 20px;
-                color: $color-light;
-                text-decoration: none;
-                font-size: 0.8rem;
-            }
-        }
-    }
-
-    .bottom-header {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    .main-nav {
+      .nav-item {
+        margin: 0 20px;
         color: $color-light;
-
-        .big-title {
-            font-size: 2rem;
-            font-weight: $font-bold;
-            position: relative;
-
-            .small-title {
-                font-size: 0.8rem;
-                line-height: 0.8rem;
-                padding-top: 0;
-                position: absolute;
-                right: 0;
-            }
-        }
+        text-decoration: none;
+        font-size: 0.8rem;
+      }
     }
+  }
+
+  .bottom-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $color-light;
+
+    .big-title {
+      font-size: 2rem;
+      font-weight: $font-bold;
+      position: relative;
+
+      .small-title {
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+        padding-top: 0;
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
 }
 
