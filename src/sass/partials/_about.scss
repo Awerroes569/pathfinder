@@ -1,7 +1,11 @@
 #about {
-  display: none;//flex;
+  display: none;
   flex-direction: column;
   //max-height: 30vh;
+
+  .active {
+    display: flex;
+  }
 
   .figure-one {
     position: relative;

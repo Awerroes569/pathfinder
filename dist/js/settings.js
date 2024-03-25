@@ -1,7 +1,10 @@
 export const select = {
 
   containerOf: {
-    finder: '.table-container' },
+    finder: '.table-container',
+    pages: '#pages',
+  },
+  
   all: {
     menuProducts: '#product-list > .product',
     menuProductsActive: '#product-list > .product.active',
@@ -28,5 +31,13 @@ export const classNames = {
 
   cart: {
     wrapperActive: 'active',
+  },
+
+  pages: {
+    active: 'active',
+  },
+  
+  nav: {
+    active: 'active',
   },
 };

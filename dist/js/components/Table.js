@@ -47,14 +47,40 @@ class Table {
   }
 
   changingPhase(thisTable = this) {
-    console.log('changing phase');
+
     let moved = thisTable.phase.shift();
     thisTable.phase.push(moved);
     if (moved[0] === 'CALCULATE ROUTE') {
-      let analyzed = thisTable.analyzePath();
-      console.log('ANALYZED', analyzed);  
-      thisTable.findShortestPath(analyzed);
-      thisTable.showShortest();
+      if (this.draw.length < 2) {
+        this.displayError('DRAWN  PATH  TOO SHORT');
+        thisTable.phase.unshift(moved);
+        return;
+      }
+      else {
+        let analyzed = thisTable.analyzePath();
+        console.log('ANALYZED', analyzed);
+        thisTable.findShortestPath(analyzed);
+        thisTable.showShortest();
+      }
+    }
+    else if (moved[0] === 'DRAW ROUTES') {
+      if (this.draw.length < 2) {
+        this.displayError('DRAWN  PATH  TOO SHORT');
+        thisTable.phase.unshift(moved);
+        return;
+      }
+    } else if (moved[0] === 'PICK START') {
+      if (this.start.length === 0) {
+        this.displayError('NO  START  POINT');
+        thisTable.phase.unshift(moved);
+        return;
+      }
+    } else if (moved[0] === 'PICK FINISH') {
+      if (this.finish.length === 0) {
+        this.displayError('NO  FINISH  POINT');
+        thisTable.phase.unshift(moved);
+        return;
+      }
     } else if (moved[0] === 'THE BEST ROUTE IS...') {
       thisTable.clearAll();
     }
@@ -65,6 +91,7 @@ class Table {
   updateDOM() {
     let [message, button] = this.phase[0];
     this.dom.message.innerHTML = message;
+    this.dom.message.style.backgroundColor = 'rgba(0, 0, 0, 0)';
     this.dom.button.innerHTML = button;
   }
 
@@ -75,7 +102,7 @@ class Table {
       let step = this.solution[i];
       let toColor = step.join(' ');
       let element = document.getElementById(toColor);
-      setTimeout( function() {element.style.backgroundColor = 'green';}, 100*i);
+      setTimeout(function () { element.style.backgroundColor = '#78e08f';}, 100*i);
       //element.style.backgroundColor = 'green';
     }
 
@@ -86,6 +113,7 @@ class Table {
     let toCopy = JSON.stringify(this.draw);
     let maze = JSON.parse(toCopy);
     let steps = {};
+    //let success = false;
 
     //INIT START
     steps[currentStep] = [[...this.start[0]]];
@@ -94,6 +122,10 @@ class Table {
     let infinity = true;
 
     while (infinity) {
+      if (!steps[currentStep]) {
+        this.displayError('NO  PATH  FOUND');
+        return;
+      }
       let lastSteps = [...steps[currentStep]];
       currentStep++;
       for (let step of lastSteps) {
@@ -125,8 +157,8 @@ class Table {
   }
 
   findShortestPath(steps) {
-    let highest = Object.keys(steps).length - 1;
-    console.log('steps', steps)
+    let highest = Object.keys(steps).length - 1; 
+    console.log('steps', steps);
     console.log('highest', highest);
     let shortest = {};
     shortest[highest]=[...this.finish[0]];
@@ -149,8 +181,6 @@ class Table {
     this.solution = shortest;
     return shortest;
   }
-
-
 
   areNeighbours(step1, step2) {
     let rowDiff = step1[0] - step2[0];
@@ -178,7 +208,6 @@ class Table {
     return realPossibilities;
   }
 
-  
   findPossibilities(step, maze) {
     console.log(maze);
     //let possibilities = [];
@@ -200,7 +229,6 @@ class Table {
     console.log('crowd', crowd);
     return crowd;
   }
-
 
   removeStep(maze, step) {
     let indexToRemove = maze.findIndex(function (array) {
@@ -248,11 +276,20 @@ class Table {
     if (this.isValidDraw(coordinates)) {
       this.draw.push([...coordinates]);
       console.log('after push', this.draw);
-      element.style.backgroundColor = 'red';
+      element.style.backgroundColor = '#ff6b6b';
       return;
-    }
-    console.log('invalid');
-    element.style.backgroundColor = 'grey';
+    } 
+    //this.displayError('INVALID  PATH  CELL');
+    
+    element.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+  }
+
+  displayError(alertMessage,time=500) {
+    let message = this.dom.message;
+    message.innerHTML = alertMessage;
+    message.style.backgroundColor = '#e55039';
+    let that = this; // Store reference to 'this' in a variable
+    setTimeout(function () { that.updateDOM(); }, time);
   }
 
   pickStart(coordinates, element) {
@@ -261,9 +298,11 @@ class Table {
       this.clearStart();
       this.start.push([...coordinates]);
 
-      element.style.backgroundColor = 'yellow';
+      element.style.backgroundColor = '#e55039';
       element.innerHTML = 'S';
       
+    } else {
+      this.displayError('INVALID  START  CELL');
     }
   }
   pickFinish(coordinates, element) {
@@ -272,8 +311,10 @@ class Table {
       this.clearFinish();
       this.finish.push([...coordinates]);
 
-      element.style.backgroundColor = 'blue';
+      element.style.backgroundColor = '#e55039';
       element.innerHTML = 'F';
+    } else {
+      this.displayError('INVALID  FINISH  CELL');
     }
   }
 
@@ -346,8 +387,9 @@ class Table {
 
       if (friends.includes(neighbour)) {
         return true;
-      }
+      } 
     }
+    this.displayError('INVALID  PATH  CELL');
     return false;
   }
 

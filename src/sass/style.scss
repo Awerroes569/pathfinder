@@ -11,5 +11,15 @@
 
 //        "test:scss": "stylelint --fix src/sass/",
 
+#pages {
+    >* {
+        display: none;
+    }
+
+    >.active {
+        display: flex;
+    }
+}
+
 
 

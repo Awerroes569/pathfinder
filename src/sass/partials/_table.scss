@@ -1,44 +1,64 @@
-.table-container {
-  display: flex;
+#finder {
+  display: none;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  align-content: center;
-  background: grey;
-  margin-top: 50px;
-  border: 5x solid white;
+  //max-height: 30vh;
 
-  .table {
-    margin-top: 50 px;
+  .active {
+    display: flex;
+  }
 
-    background: white;
-    display: grid;
-    grid-template-columns: repeat(10, 20px);
-    grid-template-rows: repeat(10, 20px);
-    gap: 5px;
-    border: 5px solid white;
-    /* Optional: adds border around the grid */
+  .table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    align-content: center;
+    //background: grey;
+    margin-top: 30px;
+    //border: 5x solid white;
+    
 
-    .grid-item {
-      background: grey;
-      font-size: 10px;
+    .current-message {
+      //margin: 10px;
+      font-size: 16px;
+      font-weight: $font-semibold;
+      color: white;
+      padding: 0 10px;
+      border-radius: $radius;
+    }
+
+    .table {
+      margin-top: 10px;
+      //background: white;
+      display: grid;
+      grid-template-columns: repeat(10, 28px);
+      grid-template-rows: repeat(10, 28px);
+      //gap: 5px white;
+      border: 2px solid white;
+      /* Optional: adds border around the grid */
+
+      .grid-item {
+        //background: grey;
+        font-size: 12px;
+        text-justify: center;
+        text-align: center;
+        color: white;
+        font-weight: $font-semibold;
+        border: 2px solid white;
+      }
+    }
+
+    .phase-button {
+      color: white;
+      margin: 10px auto;
+      //height: 30px;
+      width: fit-content;
+      background-color: $color-main;
+      padding: 3px 10px;
+      text-align: center;
+      text-justify: center;
+      border-radius: $radius;
     }
   }
-
-  .phase-button {
-    margin: 20px auto;
-    //height: 30px;
-    width: fit-content;
-    background-color: yellow;
-    padding: 3px 10px;
-    text-align: center;
-    text-justify: center;
-    border-radius: 5px;
-  }
 }
-
-
-
-
-
