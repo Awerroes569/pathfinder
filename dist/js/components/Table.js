@@ -1,4 +1,3 @@
-//const grid = document.querySelector('.table');
 import { classNames, select } from '../settings.js';
 
 class Table {
@@ -6,7 +5,6 @@ class Table {
   constructor() {
 
     this.dom = {};
-    //this.table = document.querySelector('.table');
     this.phase = [
       ['DRAW ROUTES', 'FINISH DRAWING'],
       ['PICK START', 'ACCEPT START'],
@@ -43,7 +41,6 @@ class Table {
     this.dom.message = document.querySelector(select.finder.message);
     this.dom.table = document.querySelector(select.finder.table);
     this.dom.button = document.querySelector(select.finder.button);
-    console.log('button', this.dom.button);
   }
 
   changingPhase(thisTable = this) {
@@ -58,7 +55,6 @@ class Table {
       }
       else {
         let analyzed = thisTable.analyzePath();
-        console.log('ANALYZED', analyzed);
         thisTable.findShortestPath(analyzed);
         thisTable.showShortest();
       }
@@ -96,14 +92,12 @@ class Table {
   }
 
   showShortest() {
-    console.log('showing shortest');
     let highest = Object.keys(this.solution).length - 1;
     for (let i = 0; i <= highest; i++) {
       let step = this.solution[i];
       let toColor = step.join(' ');
       let element = document.getElementById(toColor);
       setTimeout(function () { element.style.backgroundColor = '#78e08f';}, 100*i);
-      //element.style.backgroundColor = 'green';
     }
 
   }
@@ -113,9 +107,7 @@ class Table {
     let toCopy = JSON.stringify(this.draw);
     let maze = JSON.parse(toCopy);
     let steps = {};
-    //let success = false;
 
-    //INIT START
     steps[currentStep] = [[...this.start[0]]];
 
     this.removeStep(maze, steps[currentStep][0]);
@@ -130,24 +122,17 @@ class Table {
       currentStep++;
       for (let step of lastSteps) {
         let possibilities = this.findPossibilities(step, maze);
-        console.log('possibilities inside Analyze', possibilities);
         let verifiedPossibilities = this.findRealPossibilities(possibilities, maze);
-        console.log('verified possibilities', verifiedPossibilities);
         for (let possibility of verifiedPossibilities) {
-          console.log('working possibility', possibility);
           if (steps[currentStep]) {
             steps[currentStep].push([...possibility]);
           } else {
             steps[currentStep] = [[...possibility]];
-            console.log('added step', steps[currentStep]);
           }
           this.removeStep(maze, possibility);
 
           if (JSON.stringify(possibility) === JSON.stringify(this.finish[0])) {
-            console.log('found finish');
             infinity = false;
-            console.log('steps', steps);
-            console.log('maze', maze);
             return steps;
           }
         }
@@ -158,8 +143,6 @@ class Table {
 
   findShortestPath(steps) {
     let highest = Object.keys(steps).length - 1; 
-    console.log('steps', steps);
-    console.log('highest', highest);
     let shortest = {};
     shortest[highest]=[...this.finish[0]];
 
@@ -170,14 +153,10 @@ class Table {
         if (this.areNeighbours(seeker, step)) {
           shortest[i]=[...step];
           break;
-        } else {
-          console.log('not neighbour');
         }
-      
       }
     }
     shortest[0] = [...this.start[0]];
-    console.log('shortest', shortest);
     this.solution = shortest;
     return shortest;
   }
@@ -194,25 +173,20 @@ class Table {
   }
 
   findRealPossibilities(possibilities, maze) {
-    console.log('possibilities inside FIND REAL', possibilities);
     let realPossibilities = [];
     for (let possibility of possibilities) {  
-      //verifiy if possibility is in draw
       let verified = JSON.stringify(maze);
       let toCheck = JSON.stringify(possibility);
       if (verified.includes(toCheck)) {
         realPossibilities.push(possibility);
       }
     }
-    console.log('real possibilities', realPossibilities);
     return realPossibilities;
   }
 
   findPossibilities(step, maze) {
     console.log(maze);
-    //let possibilities = [];
     let possibilitiesAll = this.createNeighbours(step);
-    console.log('possibilitiesAll', possibilitiesAll);
     return possibilitiesAll;
   }
 
@@ -220,29 +194,23 @@ class Table {
     let crowd = [];
     for (let element of this.neighbours) {
       let neighbour = [...element];
-      console.log('your neighbour', neighbour);
-      console.log('neighbour step', step);
       neighbour[0] += step[0];
       neighbour[1] += step[1];
       crowd.push(neighbour);
     }
-    console.log('crowd', crowd);
     return crowd;
   }
 
   removeStep(maze, step) {
     let indexToRemove = maze.findIndex(function (array) {
-      console.log('comparing', array, step);
       return JSON.stringify(array) === JSON.stringify(step);
     });
-    console.log('index to remove', indexToRemove);
     if (indexToRemove !== -1) {
       maze.splice(indexToRemove, 1);
     }
   }
 
   clearAll() {
-    console.log('clearing all');
     this.cleaningPaths();
     this.dom.table.innerHTML = '';
     this.fillGrid(this.dom.table);
@@ -251,36 +219,27 @@ class Table {
   proceedClick(coordinates, element) {
     switch (this.phase[0][0]) {
     case 'DRAW ROUTES':
-      console.log('draw');
       return this.oneDraw(coordinates,element);
     case 'PICK START':
-      console.log('start');
       return this.pickStart(coordinates, element);
     case 'PICK FINISH':
-      console.log('finish');
       return this.pickFinish(coordinates, element);
     case 'CALCULATE ROUTE':
-      console.log('calculate');
-      break;//return this.analyzePath();
+      break;
     case 'THE BEST ROUTE IS...':
-      console.log('start');
       break;
     default:
-      console.log('Unknown action.');
+      alert('Unknown action.');
     }
   }
 
   oneDraw(coordinates, element) {
-    console.log('inside oneDraw', element);
     
     if (this.isValidDraw(coordinates)) {
       this.draw.push([...coordinates]);
-      console.log('after push', this.draw);
       element.style.backgroundColor = '#ff6b6b';
       return;
-    } 
-    //this.displayError('INVALID  PATH  CELL');
-    
+    }     
     element.style.backgroundColor = 'rgba(0, 0, 0, 0)';
   }
 
@@ -288,12 +247,11 @@ class Table {
     let message = this.dom.message;
     message.innerHTML = alertMessage;
     message.style.backgroundColor = '#e55039';
-    let that = this; // Store reference to 'this' in a variable
+    let that = this;
     setTimeout(function () { that.updateDOM(); }, time);
   }
 
   pickStart(coordinates, element) {
-    //Check if coordinates in draw array
     if (this.isValidStart(coordinates)) {
       this.clearStart();
       this.start.push([...coordinates]);
@@ -306,7 +264,6 @@ class Table {
     }
   }
   pickFinish(coordinates, element) {
-    //Check if coordinates in draw array
     if (this.isValidFinish(coordinates)) {
       this.clearFinish();
       this.finish.push([...coordinates]);
@@ -321,11 +278,9 @@ class Table {
   clearStart() {
 
     if (this.start.length == 0) {
-      console.log('nothing to clear');
       return;
     }
 
-    console.log('clearing', this,this.start.lenght);
     let toClear = this.start.pop().join(' ');
     let element = document.getElementById(toClear);
     element.style.backgroundColor = 'red';
@@ -335,11 +290,9 @@ class Table {
   clearFinish() {
 
     if (this.finish.length == 0) {
-      console.log('nothing to clear');
       return;
     }
 
-    console.log('clearing', this, this.start.lenght);
     let toClear = this.finish.pop().join(' ');
     let element = document.getElementById(toClear);
     element.style.backgroundColor = 'red';
@@ -351,30 +304,21 @@ class Table {
       return JSON.stringify(array) === JSON.stringify(friend);
     });
 
-    // If the index is found (not -1), remove the array
     if (indexToRemove !== -1) {
       this.draw.splice(indexToRemove, 1);
-      console.log('removed', this.draw);
     }
   }
 
   isValidDraw(coordinates) { 
 
-    console.log('conda', !this.draw.length);
-
     if (!this.draw.length) {
-      console.log('no neighbours');
       return true;
-    }
-    else {
-      console.log('neighbours', this.draw);
     }
 
     let friends = JSON.stringify(this.draw);
     let friend = JSON.stringify(coordinates);
 
     if (friends.includes(friend)) {
-      console.log('friends inside');
       this.removeFriend(coordinates);
       return false;
     }
@@ -396,7 +340,6 @@ class Table {
   isValidStart(coordinates) {
 
     if (this.draw.length<2) {
-      console.log('path too short');
       return false;
     }
     
@@ -413,7 +356,6 @@ class Table {
   isValidFinish(coordinates) {
 
     if (this.draw.length < 2) {
-      console.log('path too short');
       return false;
     }
 
@@ -436,9 +378,7 @@ class Table {
         var coordinates = `${r} ${c}`;
         gridItem.classList.add('grid-item');
         gridItem.id = coordinates;
-        //gridItem.innerHTML=coordinates;
         table.appendChild(gridItem);
-        //console.log(gridItem);
       }
     }
   }
@@ -456,14 +396,7 @@ class Table {
       let gridItemId = event.target.id;
       let rowcol = gridItemId.split(' ');
       let toCheck = [parseInt(rowcol[0]), parseInt(rowcol[1])];
-      //alert(`You produced tocheck ${toCheck}`);
-      thisTable.proceedClick(toCheck, event.target);//thisTable.oneDraw(toCheck);
-      //console.log('checked', checked);
-      //if (checked) {
-      //  event.target.style.backgroundColor = checked;
-      //}
-
-      //console.log('LISTENER ADDED');
+      thisTable.proceedClick(toCheck, event.target);
     });
   }
 
@@ -471,9 +404,7 @@ class Table {
     const thisTable = this;
     this.dom.button.addEventListener('click', function (event) {
       event.preventDefault();
-      thisTable.changingPhase(thisTable);
-      console.log('button clicked');
-      
+      thisTable.changingPhase(thisTable);      
     });
   }
 
