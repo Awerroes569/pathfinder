@@ -488,7 +488,7 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 28px);
   grid-template-rows: repeat(10, 28px);
-  border: 2px solid white;
+  border: 1px solid white;
 }
 #finder .table-container .table .grid-item {
   font-size: 12px;
@@ -496,7 +496,7 @@ body {
   text-align: center;
   color: white;
   font-weight: 500;
-  border: 2px solid white;
+  border: 1px solid white;
 }
 #finder .table-container .phase-button {
   color: white;

@@ -29,7 +29,7 @@
       display: grid;
       grid-template-columns: repeat(10, 28px);
       grid-template-rows: repeat(10, 28px);
-      border: 2px solid white;
+      border: 1px solid white;
 
       .grid-item {
         font-size: 12px;
@@ -37,7 +37,7 @@
         text-align: center;
         color: white;
         font-weight: $font-semibold;
-        border: 2px solid white;
+        border: 1px solid white;
       }
     }
 
