@@ -1,4 +1,5 @@
-import { select, classNames} from './settings.js';
+import { select, classNames } from './settings.js';
+
 import Table from './components/Table.js';
 
 const app = {
